@@ -13,17 +13,18 @@ def is_spike(value, mean, stdev, multiplier=2.5, floor=20):
     
 
 class SpikeDetector:
-    def __init__(self, cooldown_seconds=8, window=30):
+    def __init__(self, cooldown_seconds=8, window=30, floors=None):
         self.cooldown_seconds = cooldown_seconds
         self.window = window
-        self.last_flagged = {}  # metric name -> time of last alert
+        self.floors = floors or {"cpu": 20, "memory": 8, "disk": 5, "network": 2}
+        self.last_flagged = {}
 
     def check(self, metric, value, history):
         if len(history) < self.window:
             return False  # still learning what's normal
 
         mean, stdev = baseline(list(history)[-self.window:])
-        if not is_spike(value, mean, stdev):
+        if not is_spike(value, mean, stdev, floor=self.floors.get(metric, 20)):
             return False
 
         now = time.time()
