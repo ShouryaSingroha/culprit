@@ -1,5 +1,10 @@
 const METRICS = ["cpu", "memory", "disk", "network"];
 const charts = {};
+const openIncidents = new Set();
+
+function incidentKey(inc) {
+  return inc.time + "-" + inc.metric;
+}
 
 function format(metric, v) {
   if (v === undefined) return "-";
@@ -48,7 +53,14 @@ function incidentElement(inc) {
   }
   li.appendChild(list);
 
-  li.addEventListener("click", () => li.classList.toggle("open"));
+  const key = incidentKey(inc);
+  if (openIncidents.has(key)) li.classList.add("open");
+
+  li.addEventListener("click", () => {
+    li.classList.toggle("open");
+    if (li.classList.contains("open")) openIncidents.add(key);
+    else openIncidents.delete(key);
+  });
   return li;
 }
 
