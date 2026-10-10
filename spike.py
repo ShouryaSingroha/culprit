@@ -1,5 +1,5 @@
 import statistics
-
+import time
 
 def baseline(samples):
     mean = statistics.mean(samples)
@@ -10,6 +10,29 @@ def baseline(samples):
 def is_spike(value, mean, stdev, multiplier=2.5, floor=20):
     threshold = mean + max(multiplier * stdev, floor)
     return value > threshold
+    
+
+class SpikeDetector:
+    def __init__(self, cooldown_seconds=8, window=30):
+        self.cooldown_seconds = cooldown_seconds
+        self.window = window
+        self.last_flagged = {}  # metric name -> time of last alert
+
+    def check(self, metric, value, history):
+        if len(history) < self.window:
+            return False  # still learning what's normal
+
+        mean, stdev = baseline(list(history)[-self.window:])
+        if not is_spike(value, mean, stdev):
+            return False
+
+        now = time.time()
+        last = self.last_flagged.get(metric)
+        if last is not None and now - last < self.cooldown_seconds:
+            return False  # same burst, already reported
+
+        self.last_flagged[metric] = now
+        return True
 
 
 if __name__ == "__main__":
