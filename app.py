@@ -1,7 +1,7 @@
 import threading
 import time
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 
 from engine import Monitor
 
@@ -16,6 +16,10 @@ def run_monitor():
         with lock:
             monitor.tick()
         time.sleep(1)
+
+@app.route("/")
+def index():
+    return render_template("index.html")
 
 
 @app.route("/api/stats")

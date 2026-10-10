@@ -1,0 +1,15 @@
+body { font-family: system-ui, sans-serif; background: #1b1d1f; color: #e8e6e1; margin: 0; }
+header, main { max-width: 1000px; margin: 0 auto; padding: 24px; }
+header { display: flex; justify-content: space-between; align-items: baseline; }
+h1 { margin: 0; }
+#status { color: #90959a; margin: 0; }
+
+.metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.card { background: #232629; border: 1px solid #34383c; padding: 14px; }
+.card h2 { margin: 0; font-size: 14px; color: #90959a; font-weight: 500; }
+.value { font: 500 22px monospace; display: block; margin: 4px 0 8px; }
+
+#incidents { list-style: none; padding: 0; }
+.incident { background: #232629; border-left: 3px solid #e0a446; padding: 10px 14px; margin-bottom: 8px; cursor: pointer; font-family: monospace; }
+.suspects { display: none; margin-top: 8px; color: #90959a; }
+.incident.open .suspects { display: block; }

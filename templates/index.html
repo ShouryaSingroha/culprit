@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>culprit</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header>
+    <h1>culprit</h1>
+    <p id="status">watching&hellip;</p>
+  </header>
+
+  <main>
+    <section class="metrics">
+      <article class="card"><h2>CPU</h2><span class="value" id="val-cpu">-</span><canvas id="chart-cpu"></canvas></article>
+      <article class="card"><h2>Memory</h2><span class="value" id="val-memory">-</span><canvas id="chart-memory"></canvas></article>
+      <article class="card"><h2>Disk</h2><span class="value" id="val-disk">-</span><canvas id="chart-disk"></canvas></article>
+      <article class="card"><h2>Network</h2><span class="value" id="val-network">-</span><canvas id="chart-network"></canvas></article>
+    </section>
+
+    <section>
+      <h2>Case log</h2>
+      <p id="empty">No incidents yet. Go open a heavy app.</p>
+      <ol id="incidents"></ol>
+    </section>
+  </main>
+
+  <script src="/static/chart.umd.js"></script>
+  <script src="/static/dashboard.js"></script>
+</body>
+</html>
